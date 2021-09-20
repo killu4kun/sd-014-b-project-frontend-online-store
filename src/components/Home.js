@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SideBar from './SideBar';
 
 class Home extends React.Component {
   constructor() {
@@ -23,6 +24,7 @@ class Home extends React.Component {
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
         <Link to="/Cart" data-testid="shopping-cart-button">Carrinho</Link>
+        <SideBar />
       </div>
     );
   }

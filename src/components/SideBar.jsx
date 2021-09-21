@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getCategories, getProductsFromCategory } from '../services/api';
+import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import Product from './Product';
 
 class SideBar extends Component {
@@ -23,34 +23,26 @@ class SideBar extends Component {
     });
   };
 
-  handleClick = () => {
-    const { name } = this.props;
-    getProductsFromCategory(name).then(({ results }) => {
-      results.filter(({ title, thumbnail, price, id }) => (
-        <Product key={ id } title={ title } thumbnail={ thumbnail } price={ price } />
-      ));
-    });
-  };
-
   render() {
     const { categories, resolve } = this.state;
-    return (
-      <div>
-        <ul>
-          {resolve
-            && categories.map(({ id, name }) => (
-              <li
-                name={ name }
-                onClick={ this.handleClick }
-                key={ id }
-                data-testid="category"
-              >
-                {name}
-              </li>
-            ))}
-        </ul>
-      </div>
-    );
+    if (resolve) {
+      return (
+        <div>
+          {categories.map(({ id, name }) => (
+            <button
+              type="button"
+              name={ name }
+              propz={ this.handleClick }
+              key={ id }
+              data-testid="category"
+            >
+              {name}
+            </button>
+          ))}
+        </div>
+      );
+    }
+    return <div />;
   }
 }
 

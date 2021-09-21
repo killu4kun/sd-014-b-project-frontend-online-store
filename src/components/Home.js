@@ -20,7 +20,6 @@ class Home extends React.Component {
   handleSubmit = () => {
     const { inputText } = this.state;
     getProductsFromCategoryAndQuery(inputText, inputText).then(({ results }) => {
-      console.log(results);
       this.setState({ searchResults: results });
     });
   };
@@ -47,7 +46,7 @@ class Home extends React.Component {
         <Link to="/Cart" data-testid="shopping-cart-button">
           Carrinho
         </Link>
-        <SideBar />
+        <SideBar onClick={ (event) => this.setState({ inputText: event.target.name }) } />
         {searchResults.map(({ title, thumbnail, price, id }) => (
           <Product key={ id } title={ title } thumbnail={ thumbnail } price={ price } />
         ))}

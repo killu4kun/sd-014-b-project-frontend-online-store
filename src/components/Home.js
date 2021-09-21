@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SideBar from './SideBar';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import Product from './Product';
+import SideBar from './SideBar';
 
 class Home extends React.Component {
   constructor() {
@@ -29,7 +29,7 @@ class Home extends React.Component {
     const { inputText, searchResults } = this.state;
 
     return (
-      <div>
+      <div className="busca">
         <input
           data-testid="query-input"
           type="text"
@@ -47,10 +47,10 @@ class Home extends React.Component {
         <Link to="/Cart" data-testid="shopping-cart-button">
           Carrinho
         </Link>
+        <SideBar />
         {searchResults.map(({ title, thumbnail, price, id }) => (
           <Product key={ id } title={ title } thumbnail={ thumbnail } price={ price } />
         ))}
-        <SideBar />
       </div>
     );
   }

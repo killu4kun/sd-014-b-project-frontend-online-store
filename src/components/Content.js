@@ -10,6 +10,7 @@ class Content extends React.Component {
         <Switch>
           <Route exact path="/" component={ Home } />
           <Route exact path="/Cart" component={ ShoppingCart } />
+          <Route exact path="/:category" component={ Home } />
         </Switch>
       </main>
     );

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
-import Product from './Product';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { getCategories } from '../services/api';
 
 class SideBar extends Component {
   constructor() {
@@ -25,19 +26,16 @@ class SideBar extends Component {
 
   render() {
     const { categories, resolve } = this.state;
+    const { fetchCategories } = this.props;
     if (resolve) {
       return (
         <div>
           {categories.map(({ id, name }) => (
-            <button
-              type="button"
-              name={ name }
-              propz={ this.handleClick }
-              key={ id }
-              data-testid="category"
-            >
-              {name}
-            </button>
+            <Link to={ `/${name}` } key={ id } onClick={ fetchCategories }>
+              <button type="button" name={ name } data-testid="category">
+                {name}
+              </button>
+            </Link>
           ))}
         </div>
       );
@@ -45,5 +43,9 @@ class SideBar extends Component {
     return <div />;
   }
 }
+
+SideBar.propTypes = {
+  fetchCategories: PropTypes.func.isRequired,
+};
 
 export default SideBar;

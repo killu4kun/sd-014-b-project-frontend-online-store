@@ -24,6 +24,13 @@ class Home extends React.Component {
     });
   };
 
+  fetchCategories = async ({ target: value, id }) => {
+    const products = await getProductsFromCategoryAndQuery(id, value.innerText);
+    this.setState({
+      searchResults: products.results,
+    });
+  };
+
   render() {
     const { inputText, searchResults } = this.state;
 
@@ -46,7 +53,10 @@ class Home extends React.Component {
         <Link to="/Cart" data-testid="shopping-cart-button">
           Carrinho
         </Link>
-        <SideBar onClick={ (event) => this.setState({ inputText: event.target.name }) } />
+        <SideBar
+          fetchCategories={ this.fetchCategories }
+          onClick={ (event) => this.setState({ inputText: event.target.name }) }
+        />
         {searchResults.map(({ title, thumbnail, price, id }) => (
           <Product key={ id } title={ title } thumbnail={ thumbnail } price={ price } />
         ))}

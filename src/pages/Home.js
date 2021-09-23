@@ -34,7 +34,7 @@ class Home extends Component {
       productCatalog: result.results,
     });
     return result;
-  };
+  }
 
   getProductCategoryAPI = async () => {
     const getAPI = await getCategories();
@@ -42,7 +42,7 @@ class Home extends Component {
       getCategoryAPI: getAPI,
       requestAPI: true,
     });
-  };
+  }
 
   async searchProducts() {
     const { searchText } = this.state;
@@ -56,7 +56,7 @@ class Home extends Component {
   render() {
     const { getCategoryAPI, requestAPI, productCatalog, searchText } = this.state;
     return (
-      <section>
+      <main>
         <p data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
@@ -68,34 +68,28 @@ class Home extends Component {
           value={ searchText }
           onChange={ this.handleChange }
         />
-        <button
-          type="button"
-          data-testid="query-button"
-          onClick={ this.searchProducts }
-        >
+        <button type="button" data-testid="query-button" onClick={ this.searchProducts }>
           Pesquisa
         </button>
         <br />
         <br />
-        {requestAPI ? (
-          <>
-            {getCategoryAPI.map((category) => (
-              <button
-                onClick={ this.handleClick }
-                type="button"
-                key={ category.id }
-                data-testid="category"
-                name={ category.name }
-              >
-                {category.name}
-              </button>
-            ))}
-          </>
-        ) : (
-          ''
-        )}
+        {requestAPI
+          ? (
+            <>
+              {getCategoryAPI.map((category) => (
+                <button
+                  onClick={ this.handleClick }
+                  type="button"
+                  key={ category.id }
+                  data-testid="category"
+                  name={ category.name }
+                >
+                  { category.name }
+                </button>))}
+            </>)
+          : ''}
         <ProductCatalog productCatalog={ productCatalog } />
-      </section>
+      </main>
     );
   }
 }

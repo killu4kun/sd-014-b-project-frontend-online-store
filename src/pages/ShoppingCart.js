@@ -6,7 +6,6 @@ import CartItem from '../components/CartItem';
 class ShoppingCart extends Component {
   constructor() {
     super();
-
     this.state = {
       products: [],
       productOnCart: false,

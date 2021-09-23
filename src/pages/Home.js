@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import ProductCatalog from '../components/ProductCatalog';
+import CartIcon from '../images/Icon.png';
 
 class Home extends Component {
   constructor() {
@@ -60,7 +61,6 @@ class Home extends Component {
         <p data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
-        <Link data-testid="shopping-cart-button" to="/shoppingcart" />
         <input
           type="text"
           data-testid="query-input"
@@ -71,8 +71,15 @@ class Home extends Component {
         <button type="button" data-testid="query-button" onClick={ this.searchProducts }>
           Pesquisa
         </button>
-        <br />
-        <br />
+        <Link data-testid="shopping-cart-button" to="/shoppingcart">
+          <img
+            width="40px"
+            className="shopping-cart-img"
+            src={ CartIcon }
+            alt="Ícone do Carrinho de compras"
+          />
+        </Link>
+        <hr />
         {requestAPI
           ? (
             <>

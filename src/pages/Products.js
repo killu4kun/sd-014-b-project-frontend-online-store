@@ -17,35 +17,52 @@ class Products extends Component {
   }
 
   fetchDetailsProduct = async () => {
-    const { match: { params: { name, id } } } = this.props;
+    const {
+      match: {
+        params: { name, id },
+      },
+    } = this.props;
     const data = await getProductsFromCategoryAndQuery('', name);
     const productDetail = data.results.find((product) => product.id === id);
     this.setState({
       product: productDetail,
       loading: false,
     });
-  }
+  };
+
+  handleClick = () => {
+    const { product } = this.state;
+    localStorage.setItem('item-list', JSON.stringify([product]));
+  };
 
   render() {
     const { product, loading } = this.state;
     return (
       <div>
-        <h3 data-testid="product-detail-name">{ product.title }</h3>
+        <h3 data-testid="product-detail-name">{product.title}</h3>
         <img src={ product.thumbnail } alt={ product.title } />
-        <p>{ product.price }</p>
-        {loading
-          ? ''
-          : (
-            <ul key={ product.id }>
-              { product.attributes.map((attribute, index) => (
-                <li key={ index }>
-                  { `${attribute.name}: ${attribute.value_name}` }
-                </li>
-              ))}
-            </ul>
-          )}
+        <p>{product.price}</p>
+        {loading ? (
+          ''
+        ) : (
+          <ul key={ product.id }>
+            {product.attributes.map((attribute, index) => (
+              <li key={ index }>
+                {`${attribute.name}: ${attribute.value_name}`}
+              </li>
+            ))}
+          </ul>
+        )}
+        <button
+          data-testid="product-detail-add-to-cart"
+          type="button"
+          id={ product.id }
+          onClick={ this.handleClick }
+        >
+          Adicionar ao carrinho
+        </button>
         <Link data-testid="shopping-cart-button" to="/shoppingcart">
-          <button type="button">Carrinho de Compras</button>
+          <button type="button">Carrinho de compras</button>
         </Link>
       </div>
     );

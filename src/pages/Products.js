@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 
+// Repositório do Grupo 7 foi consultado para Atributtes
+
 class Products extends Component {
   constructor() {
     super();
@@ -37,22 +39,20 @@ class Products extends Component {
 
   render() {
     const { product, loading } = this.state;
+
+    if (loading) {
+      return <div />;
+    }
     return (
       <div>
         <h3 data-testid="product-detail-name">{product.title}</h3>
         <img src={ product.thumbnail } alt={ product.title } />
         <p>{product.price}</p>
-        {loading ? (
-          ''
-        ) : (
-          <ul key={ product.id }>
-            {product.attributes.map((attribute, index) => (
-              <li key={ index }>
-                {`${attribute.name}: ${attribute.value_name}`}
-              </li>
-            ))}
-          </ul>
-        )}
+        <ul key={ product.id }>
+          {product.attributes.map((attribute, index) => (
+            <li key={ index }>{`${attribute.name}: ${attribute.value_name}`}</li>
+          ))}
+        </ul>
         <button
           data-testid="product-detail-add-to-cart"
           type="button"
